@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<title>Respondendo Questionario</title>
+</h:head>
+<h:body>
+	<h1>Respondendo Questionario</h1>
+	<hr/>
+	
+	<h:form id="resposta">
+		<h:messages/>
+		<h:outputLabel value="Email utilizado para preencher questionario" /> <br/>
+		<h:inputText id="descricao" value="#{respostaUsuarioBean.email}" required="true">
+			<f:ajax event="blur" execute="@form" listener="#{respostaUsuarioBean.validaUsuarioQuestionario}" render=":resposta"/>
+		</h:inputText> <br/>
+		<br/>
+		<h:outputLabel value="Nome questionario" /> <br/>
+		<h:outputLabel value="#{respostaUsuarioBean.questionario.nome}"/><br/>
+		<hr/>
+		<h:outputLabel value="Perguntas"/><br/>
+		<h:dataTable value="#{respostaUsuarioBean.listaPerguntaQuestionario}" var="pergunta" rendered="#{!empty respostaUsuarioBean.listaPerguntaQuestionario}">
+			<h:column>
+				<f:facet name="header">Numero</f:facet>
+				<h:outputText value="#{pergunta.codPergunta}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Descrição</f:facet>
+				<h:outputText value="#{pergunta.descricao}" />
+			</h:column>
+			<h:column>
+					<f:facet name="header">Resposta</f:facet>
+					<h:inputText value="#{pergunta.respostaDiscursiva}" rendered="#{!pergunta.objetiva}"/>
+					<h:selectOneRadio value="#{pergunta.respostaObjetiva}" rendered="#{pergunta.objetiva}">
+			   			<f:selectItems value="#{pergunta.listaResposta}" var="resposta"  itemValue="#{resposta.idOpcaoRespostaObjetiva}" itemLabel="#{resposta.descricao}" />
+			   		</h:selectOneRadio>
+			</h:column>
+		</h:dataTable>
+		
+		<h:commandButton value="Salvar Resposta" action="#{respostaUsuarioBean.inserirResposta}"/>
+	</h:form>
+</h:body>
+</html>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<title>Respondendo Questionario</title>
+</h:head>
+<h:body>
+	<h1>Respondendo Questionario</h1>
+	<hr/>
+	
+	<h:form id="resposta">
+		<h:messages/>
+		<hr/>
+		<h:outputLabel value="Email utilizado para preencher questionario" /> <br/>
+		<h:outputLabel id="descricao" value="#{contextoBean.usuario.email}" required="true" /><br/>
+		<br/>
+		<h:outputLabel value="Nome questionario" /> <br/>
+		<h:outputLabel value="#{contextoBean.questionarioSelecionado.nome}"/><br/>
+		<hr/>
+		<h:outputLabel value="Respostas"/><br/>
+		<h:dataTable value="#{contextoBean.listaRespostaUsuario}" var="resposta" rendered="#{!empty contextoBean.listaRespostaUsuario}">
+			<h:column>
+				<f:facet name="header">Numero</f:facet>
+				<h:outputText value="#{resposta.pk.pergunta.codPergunta}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Descrição</f:facet>
+				<h:outputText value="#{resposta.pk.pergunta.descricao}" />
+			</h:column>
+			<h:column>
+					<f:facet name="header">Resposta</f:facet>
+					<h:outputText value="#{resposta.respostaDiscursiva}"/>
+			</h:column>
+		</h:dataTable>
+		
+		<h:commandButton value="Retornar" action="visualizarRespostaQuestionario"/>
+	</h:form>
+</h:body>
+</html>

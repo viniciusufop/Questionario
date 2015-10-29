@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<title>Usuário Cadastrado</title>
+</h:head>
+<h:body>
+	<h1>Usuário Cadastrado</h1>
+	<hr/>
+		<h:inputHidden value="#{request.remoteUser}"/>
+	Nome: <h:outputLabel value="#{contextoBean.usuarioLogado.nome}"/> <br/>
+	E-mail: <h:outputLink value="mailto:#{contextoBean.usuarioLogado.email}">
+			<h:outputLabel value="#{contextoBean.usuarioLogado.email}" />
+			</h:outputLink> <br/>
+	<hr/>
+	<h:form>
+		<h:commandLink action="inicio" value="Início" /><br />
+		<h:commandLink action="criarQuestionario" value="Criar Questionario" /><br/>
+		<h:commandLink action="listarQuestionariosUsuario" value="Listar Questionarios do Usuário" /><br/>
+	</h:form>
+	
+	<h:outputLink onclick="document.location='#{request.contextPath}/j_spring_security_logout'" title="Sair"/>
+</h:body>
+</html>

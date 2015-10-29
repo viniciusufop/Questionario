@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<title>Cadastro de Usuários</title>
+</h:head>
+<h:body>
+	<h1>Cadastro de Usuários</h1>
+	<hr/>
+	
+	<h:form id="cadastro">
+		<h:messages/>
+		
+		<h:panelGrid columns="2">
+			<h:outputLabel value="Nome:" for="nome"/>
+			<h:inputText id="nome" label="Nome" value="#{usuarioBean.usuario.nome}" required="true"/>
+			<h:outputLabel value="Login/e-mail:" for="email"/>
+			<h:inputText id="email" label="email" value="#{usuarioBean.usuario.email}" required="true" validatorMessage="E-mail incorreto">
+				<f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+			</h:inputText>
+			<h:outputLabel value="Senha:" for="senha"/>
+			<h:inputSecret id="senha" label="senha" value="#{usuarioBean.usuario.senha}" required="true" />
+			<h:outputLabel value="Confirmar Senha:" for="confirmarSenha"/>
+			<h:inputSecret id="confirmarSenha" label="confirmarSenha" value="#{usuarioBean.confirmarSenha}" required="true"/>
+		</h:panelGrid>
+		<hr/>
+		<h:commandButton value="Salvar" action="#{usuarioBean.salvar}" />
+		&nbsp;
+		<h:commandButton value="Retornar" action="inicio" immediate="true"/>
+	</h:form>
+</h:body>
+</html>

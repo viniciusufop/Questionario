@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<title>Editando Respostas</title>
+</h:head>
+<h:body>
+	<h1>Editando Respostas</h1>
+	<hr/>
+	
+	<h:form id="edicao">
+		<h:messages/>
+		
+		<h:panelGrid>
+			<h:outputLabel value="Pergunta:"/>
+			<h:outputLabel value="#{contextoBean.perguntaSelecionada.descricao}"/><br/>
+			
+			<h:outputLabel value="Inserir Nova Resposta" /> <br/>
+			
+			<h:outputLabel value="Resposta:" for="resposta"/>
+			<h:inputText id="resposta" value="#{respostaBean.resposta.descricao}"/>
+			
+			<h:commandButton value="Inserir" action="#{respostaBean.inserirResposta}">
+				<f:ajax execute="@form" render=":edicao :apresentacao"/>
+			</h:commandButton>
+		</h:panelGrid>
+	</h:form>
+	
+	<h:form id="apresentacao">
+		<h:messages/>
+		<h:outputText value="Resposta associadas a pergunta"/>
+		
+		<h:dataTable value="#{respostaBean.listaRespostaPergunta}" var="resposta" rendered="#{!empty respostaBean.listaRespostaPergunta}">
+			<h:column>
+				<f:facet name="header">Descrição</f:facet>
+				<h:outputText value="#{resposta.descricao}" />
+			</h:column>
+			<h:column>
+				<h:commandLink action="#{respostaBean.excluirResposta}" value="excluir">
+					<f:setPropertyActionListener value="#{resposta}" target="#{respostaBean.resposta}"/>
+					<f:ajax execute="@form" render=":apresentacao"/>
+				</h:commandLink>
+			</h:column>	
+		</h:dataTable>
+		
+	</h:form>
+	
+</h:body>
+</html>

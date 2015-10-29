@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<title>Editando Questionario</title>
+</h:head>
+<h:body>
+	<h1>Editando questionario</h1>
+	<hr/>
+	
+	<h:form id="edicao">
+		<h:messages/>
+		
+		<h:panelGrid>
+			<h:outputLabel value="Inserir Nova Pergunta" /> <br/>
+			
+			<h:outputLabel value="Pergunta:" for="pergunta"/>
+			<h:inputText id="descricao" value="#{perguntaBean.pergunta.descricao}"/>
+			
+			<h:outputLabel value="Objetiva" for="objetiva"/>
+			<h:selectBooleanCheckbox value="#{perguntaBean.pergunta.objetiva}"></h:selectBooleanCheckbox>
+			<h:commandButton value="Inserir" action="#{perguntaBean.inserirPergunta}">
+				<f:ajax execute="@form" render=":edicao :apresentacao"/>
+			</h:commandButton>
+		</h:panelGrid>
+	</h:form>
+	
+	<h:form id="apresentacao">
+		<h:messages/>
+		<h:outputText value="Perguntas associadas ao questionario"/>
+		
+		<h:dataTable value="#{perguntaBean.listaPerguntaQuestionario}" var="pergunta" rendered="#{!empty perguntaBean.listaPerguntaQuestionario}">
+			<h:column>
+				<f:facet name="header">Descrição</f:facet>
+				<h:outputText value="#{pergunta.descricao}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Objetiva</f:facet>
+				<h:outputText value="#{pergunta.objetiva}" />
+			</h:column>
+			<h:column>
+				<h:commandLink action="#{perguntaBean.edicaoPergunta}" value="editar">
+					<f:setPropertyActionListener value="#{pergunta}" target="#{perguntaBean.pergunta}"/>
+				</h:commandLink>
+			</h:column>
+			<h:column>
+				<h:commandLink action="#{perguntaBean.excluirPergunta}" value="excluir">
+					<f:setPropertyActionListener value="#{pergunta}" target="#{perguntaBean.pergunta}"/>
+					<f:ajax execute="@form" render=":apresentacao"/>
+				</h:commandLink>
+			</h:column>
+			<h:column >
+				<h:commandLink action="#{perguntaBean.inserirRespostasPergunta}" value="inserir respostas" rendered="#{pergunta.objetiva}">
+					<f:setPropertyActionListener value="#{pergunta}" target="#{perguntaBean.pergunta}"/>
+				</h:commandLink>
+			</h:column>
+		</h:dataTable>
+		
+	</h:form>
+	
+</h:body>
+</html>

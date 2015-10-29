@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<title>Usuarios que responderam o questionários</title>
+</h:head>
+<h:body>
+	<h1>Lista de usuarios que responderam ao Questionários</h1>
+	<hr/>
+	<h:messages/>
+	<h:outputLabel value="Nome:"/>
+	<h:outputLabel value="#{contextoBean.usuarioLogado.nome}"/> <br/>
+	<h:outputLabel value="Questionario:"/>
+	<h:outputLabel value="#{contextoBean.questionarioSelecionado.nome}"/> <br/>
+	<hr/>
+	
+	<h:form>
+		<h:dataTable value="#{respostaUsuarioBean.listaUsuario}" var="usuario">
+			<h:column>
+				<f:facet name="header">Nome Usuario</f:facet>
+				<h:outputText value="#{usuario.nome}" />
+			</h:column>
+			<h:column>
+				<h:commandLink action="#{respostaUsuarioBean.visualizarResposta}" value="visualizar respostas">
+					<f:setPropertyActionListener value="#{usuario}" target="#{respostaUsuarioBean.usuario}"/>
+				</h:commandLink>
+			</h:column>
+		</h:dataTable>
+
+		<h:commandLink action="sucesso" value="Dados Usuario" /><br />
+	</h:form>
+</h:body>
+</html>
